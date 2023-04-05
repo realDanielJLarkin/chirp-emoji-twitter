@@ -8,9 +8,11 @@ import type { Like, Post, } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
-
+// Temorarily type any while fixing type error with Prisma
 // type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-const PostView = (props: PostWithUser) => {
+// const PostView = (props: PostWithUser) => { 
+
+const PostView = (props: any) => {
 
     const checkForLikes = () => {
         if (post.likes) {
