@@ -100,7 +100,7 @@ const PostView = (props: any) => {
                 <Image src={author.profileImageUrl} alt="profile image" className="h-14 w-14 rounded-full" height={56} width={56} />
                 <div className="flex flex-col">
                     <div className="flex gap-1">
-                        <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.fullName}</p> </Link><span>·</span> <Link href={`post/${post.id}`}><span className="font-thin hover:underline">{dayjs(post.createdAt).fromNow()}</span></Link>
+                        <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.firstName + ' ' + author.lastName}</p> </Link><span>·</span> <Link href={`post/${post.id}`}><span className="font-thin hover:underline">{dayjs(post.createdAt).fromNow()}</span></Link>
                     </div>
                     <span className="text-2xl">{post.content}</span>
                 </div>

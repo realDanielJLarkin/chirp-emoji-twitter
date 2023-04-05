@@ -96,7 +96,7 @@ const SinglePost = (props: any) => {
                     <Image src={author.profileImageUrl} alt="profile image" className="h-14 w-14 rounded-full" height={56} width={56} />
                     <div className="flex flex-col">
                         <div className="flex gap-1">
-                            <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.fullName}</p></Link>
+                            <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.firstName + ' ' + author.lastName}</p></Link>
                         </div>
                         <span className="text-2xl">{post.content}</span>
                     </div>
