@@ -1,4 +1,4 @@
-import { GetStaticProps, type NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { api } from "~/utils/api";
 // import { createProxySSGHelpers } from '@trpc/react-query/ssg';
@@ -54,7 +54,7 @@ const Profile: NextPage<{ slug: string }> = ({ slug }) => {
                 </div>
                 <div className="h-[64px]" />
                 <div className="p-4 text-2xl font-bold">
-                    {data.username ? data.username : `${data.firstName} ${data.lastName}`}
+                    {data.username ? data.username : data.firstName && data.lastName ? `${data.firstName} ${data.lastName}` : ''}
                 </div>
                 <div className="border-b border-slate-200 w-full" />
                 <ProfileFeed slug={slug} />
