@@ -1,6 +1,6 @@
 import { z } from "zod";
 // import { clerkClient } from "@clerk/nextjs/server";
-import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, privateProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 // import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 // import { Redis } from "@upstash/redis";
@@ -13,7 +13,7 @@ export const likesRouter = createTRPCRouter({
     performLikeAction: privateProcedure.input(z.object({ postId: z.string(), likeId: z.any(), })).mutation(async ({ ctx, input }) => {
         const userId = ctx.userId
         const postId = input.postId
-        const likeId = input.likeId[0]
+        const likeId: string = input.likeId[0]
 
         if (!userId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Error adding like: User Error" })
         if (!postId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Error adding like: PostID Error" })
