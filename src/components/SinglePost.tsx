@@ -61,6 +61,7 @@ const SinglePost = (props: any) => {
         },
         onError: (error) => {
             // const errorMessage = error.data?.zodError?.fieldErrors.content;
+            const errorMessage = "place holder"
             console.log('Error adding like', errorMessage)
 
         }
