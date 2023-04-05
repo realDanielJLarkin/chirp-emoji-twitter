@@ -25,7 +25,7 @@ const addUserDataToPosts = async (posts: Post[],) => {
     })
 }
 
-const addUserDataToComments = async (comments: Comment[],) => {
+const addUserDataToComments = async (comments: Comment[]) => {
     const users = (await clerkClient.users.getUserList({
         userId: comments.map((comment) => comment.userId),
         limit: 100,

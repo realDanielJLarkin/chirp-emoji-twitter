@@ -13,9 +13,10 @@ import { toast } from "react-hot-toast"
 
 dayjs.extend(relativeTime)
 
-
-type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-const SinglePost = (props: PostWithUser) => {
+// Temporarily type any while debugging Prisma type error
+// type PostWithUser = RouterOutputs["posts"]["getAll"][number]
+// const SinglePost = (props: PostWithUser) => {
+const SinglePost = (props: any) => {
 
     const checkForLikes = () => {
         if (post.likes) {

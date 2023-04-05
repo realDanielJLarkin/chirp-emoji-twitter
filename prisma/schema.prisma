@@ -13,8 +13,8 @@ model Post {
     createdAt DateTime  @default(now())
     content   String    @db.VarChar(255)
     authorId  String
-    comments  Comment[] @relation("PostComments")
-    likes     Like[]    @relation("PostLikes")
+    comments  Comment[]
+    likes     Like[]
 
     @@index([authorId])
 }
@@ -25,7 +25,7 @@ model Comment {
     content   String   @db.VarChar(255)
     postId    String
     userId    String
-    post      Post     @relation("PostComments", fields: [postId], references: [id])
+    post      Post     @relation(fields: [postId], references: [id])
 
     @@index([postId])
 }
@@ -35,7 +35,7 @@ model Like {
     postId    String
     userId    String
     createdAt DateTime @default(now())
-    post      Post     @relation("PostLikes", fields: [postId], references: [id])
+    post      Post     @relation(fields: [postId], references: [id])
 
     @@index([postId])
 }

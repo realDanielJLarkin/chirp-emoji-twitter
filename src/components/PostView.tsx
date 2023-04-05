@@ -4,11 +4,12 @@ import { api, RouterOutputs } from "~/utils/api"
 import dayjs from "dayjs"
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import type { Like } from "@prisma/client"
+import type { Like, Post, } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
-type PostWithUser = RouterOutputs["posts"]["getAll"][number]
+
+// type PostWithUser = RouterOutputs["posts"]["getAll"][number]
 const PostView = (props: PostWithUser) => {
 
     const checkForLikes = () => {
@@ -19,6 +20,7 @@ const PostView = (props: PostWithUser) => {
             return noLikes
         }
     }
+
     const { post, author } = props
     const user = useUser()
     const likes = checkForLikes()
@@ -27,8 +29,6 @@ const PostView = (props: PostWithUser) => {
     const [likeId, setLikeId] = useState(likes.map((like: Like) => like.id))
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length)
     const [postLiked, setPostLiked] = useState(false)
-
-    console.log(author)
 
     const checkIfUserLikedPost = () => {
         if (user.isSignedIn && likedPost.find((like: Like) => like.postId === post.id && like.userId === user.user.id)) {
