@@ -35,8 +35,6 @@ const SinglePost = (props: PostWithUser) => {
         }
     }
 
-
-
     useEffect(() => {
         if (user.isSignedIn) {
             const postLiked = checkIfUserLikedPost()
@@ -71,7 +69,6 @@ const SinglePost = (props: PostWithUser) => {
                     setPostLiked(false)
 
                 } else {
-                    // setLikedPost({ userId: user.user.id, postId: post.id })
                     setNumberOfLikes(likes.length + 1)
                     setPostLiked(true)
                     mutate({ postId, likeId: '', })
@@ -138,11 +135,3 @@ const SinglePost = (props: PostWithUser) => {
 }
 
 export default SinglePost
-
-
-// const { post, author } = props
-//     const user = useUser()
-//     const likes = post.likes
-//     const [numberOfLikes, setNumberOfLikes] = useState(likes.length)
-//     const [postLiked, setPostLiked] = useState(false)
-//     const [liked, setLiked] = useState([])

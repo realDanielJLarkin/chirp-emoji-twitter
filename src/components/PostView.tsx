@@ -9,15 +9,7 @@ import type { Like } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
-// Temorarily type any while fixing type error with Prisma
 type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-// type PostWithLikesAndComments = PostWithUser & {
-//     post: PostWithUser["post"] & {
-//         likes: Like[],
-//         comments: Comment[]
-//     };
-// };
-
 const PostView = (props: PostWithUser) => {
 
     const { post, author } = props
@@ -69,15 +61,7 @@ const PostView = (props: PostWithUser) => {
                     mutate({ postId, likeId: id })
                     setNumberOfLikes(likes.length - 1)
                     setPostLiked(false)
-
-
-                    // setLikedPost({
-                    //     userId: '',
-                    //     postId: '',
-
-                    // })
                 } else {
-                    // setLikedPost({ userId: user.user.id, postId: post.id })
                     setNumberOfLikes(likes.length + 1)
                     setPostLiked(true)
                     mutate({ postId, likeId: '', })
