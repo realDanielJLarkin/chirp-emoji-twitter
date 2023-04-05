@@ -20,21 +20,11 @@ type PostWithUser = RouterOutputs["posts"]["getAll"][number]
 
 const PostView = (props: PostWithUser) => {
 
-    // const checkForLikes = () => {
-    //     if (post.likes) {
-    //         return post.likes
-    //     } else {
-    //         const noLikes: any = []
-    //         return noLikes
-    //     }
-    // }
-
     const { post, author } = props
     const user = useUser()
     const likes = post.likes
     const ctx = api.useContext()
     const [likedPost, setLikedPost] = useState(likes)
-    const [likeId, setLikeId] = useState(likes.map((like: Like) => like.id))
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length)
     const [postLiked, setPostLiked] = useState(false)
 
@@ -49,9 +39,10 @@ const PostView = (props: PostWithUser) => {
     useEffect(() => {
         if (user.isSignedIn) {
             const postLiked = checkIfUserLikedPost()
+            setLikedPost(likes)
             setPostLiked(postLiked)
         }
-    }, [])
+    }, [checkIfUserLikedPost, user.isSignedIn])
 
     const { mutate, isLoading } = api.likes.performLikeAction.useMutation({
         onSuccess: () => {
@@ -76,7 +67,6 @@ const PostView = (props: PostWithUser) => {
                     const id = like[0]!.id
                     console.log(id)
                     mutate({ postId, likeId: id })
-                    setLikeId([''])
                     setNumberOfLikes(likes.length - 1)
                     setPostLiked(false)
 
@@ -111,7 +101,7 @@ const PostView = (props: PostWithUser) => {
                 <Image src={author.profileImageUrl} alt="profile image" className="h-14 w-14 rounded-full" height={56} width={56} />
                 <div className="flex flex-col">
                     <div className="flex gap-1">
-                        <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.firstName + ' ' + author.lastName}</p> </Link><span>·</span> <Link href={`post/${post.id}`}><span className="font-thin hover:underline">{dayjs(post.createdAt).fromNow()}</span></Link>
+                        <Link href={`/${author.id}`}> <p>{author.username ? author.username : `${author.firstName} ${author.lastName}`}</p> </Link><span>·</span> <Link href={`post/${post.id}`}><span className="font-thin hover:underline">{dayjs(post.createdAt).fromNow()}</span></Link>
                     </div>
                     <span className="text-2xl">{post.content}</span>
                 </div>
@@ -132,7 +122,7 @@ const PostView = (props: PostWithUser) => {
                     </svg>
                     <p className="text-gray-400">0</p>
                 </div>
-                <button className=" flex gap-2 hover:text-red-500" onClick={(e) => handleLikeClicked(post.id)}>
+                <button className=" flex gap-2 hover:text-red-500" onClick={() => handleLikeClicked(post.id)}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                         fill={!user.isSignedIn ? 'none' : postLiked ? `#ef4444` : 'none'}
                         viewBox="0 0 24 24"

@@ -23,7 +23,6 @@ const SinglePost = (props: PostWithUser) => {
     const likes = post.likes
     const ctx = api.useContext()
     const [likedPost, setLikedPost] = useState(likes)
-    const [likeId, setLikeId] = useState(likes.map((like: Like) => like.id))
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length)
     const [postLiked, setPostLiked] = useState(false)
 
@@ -41,9 +40,10 @@ const SinglePost = (props: PostWithUser) => {
     useEffect(() => {
         if (user.isSignedIn) {
             const postLiked = checkIfUserLikedPost()
+            setLikedPost(likes)
             setPostLiked(postLiked)
         }
-    }, [likes])
+    }, [likes, checkIfUserLikedPost, user.isSignedIn])
 
     const { mutate, isLoading } = api.likes.performLikeAction.useMutation({
         onSuccess: () => {
@@ -64,16 +64,9 @@ const SinglePost = (props: PostWithUser) => {
         } else {
             if (!isLoading) {
                 if (postLiked) {
-                    // console.log(likeId)
-                    // mutate({ postId, likeId })
-                    // setLikeId([''])
-                    // setNumberOfLikes(likes.length - 1)
-                    // setPostLiked(false)
                     const like = likes.filter((like) => like.userId === user.user.id)
                     const id = like[0]!.id
-                    console.log(id)
                     mutate({ postId, likeId: id })
-                    setLikeId([''])
                     setNumberOfLikes(likes.length - 1)
                     setPostLiked(false)
 
@@ -95,7 +88,7 @@ const SinglePost = (props: PostWithUser) => {
                     <Image src={author.profileImageUrl} alt="profile image" className="h-14 w-14 rounded-full" height={56} width={56} />
                     <div className="flex flex-col">
                         <div className="flex gap-1">
-                            <Link href={`/${author.id}`}> <p>{author.username ? author.username : author.firstName + ' ' + author.lastName}</p></Link>
+                            <Link href={`/${author.id}`}> <p>{author.username ? author.username : `${author.firstName} ${author.lastName}`}</p></Link>
                         </div>
                         <span className="text-2xl">{post.content}</span>
                     </div>
@@ -117,7 +110,7 @@ const SinglePost = (props: PostWithUser) => {
                         </svg>
                         <p className="text-gray-400">0</p>
                     </div>
-                    <button onClick={(e) => handleLikeClicked(post.id)} className="cursor-pointer flex gap-2 hover:text-red-500">
+                    <button onClick={() => handleLikeClicked(post.id)} className="cursor-pointer flex gap-2 hover:text-red-500">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             fill={!user.isSignedIn ? 'none' : postLiked ? `#ef4444` : 'none'}
                             stroke={!user.isSignedIn ? 'currentColor' : postLiked ? `` : `currentColor`}
