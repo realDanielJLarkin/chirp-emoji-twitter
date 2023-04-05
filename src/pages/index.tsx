@@ -10,6 +10,7 @@ import Feed from "~/components/HomeFeed";
 
 dayjs.extend(relativeTime)
 
+
 const Home: NextPage = () => {
   const { user, isLoaded: userLoaded, isSignedIn } = useUser()
   if (!userLoaded) return <div />

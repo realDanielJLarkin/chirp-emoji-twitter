@@ -19,8 +19,6 @@ dayjs.extend(relativeTime)
 const ProfileFeed = ({ slug }: { slug: string }) => {
     const { data, isLoading } = api.posts.getPostsByUserId.useQuery({ userId: slug })
 
-    console.log(data)
-
     if (isLoading) return <LoadingPage />
     if (!data || data.length === 0) return <div>User has not posted</div>
 

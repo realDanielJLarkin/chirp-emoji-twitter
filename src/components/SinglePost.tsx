@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { api } from "~/utils/api"
-// import {RouterOutputs} from "~/utils/api"
+import { RouterOutputs } from "~/utils/api"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import CommentsFeed from "./CommentsFeed"
@@ -14,10 +14,15 @@ import { toast } from "react-hot-toast"
 
 dayjs.extend(relativeTime)
 
-// Temporarily type any while debugging Prisma type error
-// type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-// const SinglePost = (props: PostWithUser) => {
-const SinglePost = (props: any) => {
+
+type PostWithUser = RouterOutputs["posts"]["getAll"][number]
+type PostWithLikesAndComments = PostWithUser & {
+    post: PostWithUser["post"] & {
+        likes: Like[],
+        comments: Comment[]
+    };
+};
+const SinglePost = (props: PostWithLikesAndComments) => {
 
     const checkForLikes = () => {
         if (post.likes) {
@@ -27,7 +32,6 @@ const SinglePost = (props: any) => {
             return noLikes
         }
     }
-
 
     const { post, author } = props
     const user = useUser()

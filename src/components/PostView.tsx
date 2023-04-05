@@ -1,19 +1,24 @@
 import Image from "next/image"
 import Link from "next/link"
 import { api, } from "~/utils/api"
-// import {RouterOutputs} from "~/utils/api"
+import { RouterOutputs } from "~/utils/api"
 import dayjs from "dayjs"
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import type { Like } from "@prisma/client"
+import type { Like, Comment } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
 // Temorarily type any while fixing type error with Prisma
-// type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-// const PostView = (props: PostWithUser) => { 
+type PostWithUser = RouterOutputs["posts"]["getAll"][number]
+type PostWithLikesAndComments = PostWithUser & {
+    post: PostWithUser["post"] & {
+        likes: Like[],
+        comments: Comment[]
+    };
+};
 
-const PostView = (props: any) => {
+const PostView = (props: PostWithLikesAndComments) => {
 
     const checkForLikes = () => {
         if (post.likes) {
