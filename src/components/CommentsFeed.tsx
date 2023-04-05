@@ -25,7 +25,7 @@ const CommentsFeed = ({ id }: { id: string }) => {
                         <Image src={comment.author.profileImageUrl} alt="profile image" className="h-14 w-14 rounded-full" height={56} width={56} />
                         <div className="flex flex-col">
                             <div className="flex gap-1">
-                                <Link href={`/${comment.author.id}`}> <p>{comment.author.username ? comment.author.username : `${comment.author.firstName} ${comment.author.lastName}`}</p> </Link><span>·</span> <span className="font-thin">{dayjs(comment.comment.createdAt).fromNow()}</span>
+                                <Link href={`/${comment.author.id}`}> <p>{comment.author.username ? comment.author.username : comment.author.firstName && comment.author.lastName ? `${comment.author.firstName} ${comment.author.lastName}` : ''}</p> </Link><span>·</span> <span className="font-thin">{dayjs(comment.comment.createdAt).fromNow()}</span>
                             </div>
                             <span className="text-2xl">{comment.comment.content}</span>
                         </div>
