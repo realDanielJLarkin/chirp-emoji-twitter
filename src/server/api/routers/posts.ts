@@ -1,17 +1,28 @@
-import { z } from "zod";
+import { string, z } from "zod";
 import { clerkClient } from "@clerk/nextjs/server";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 import { Redis } from "@upstash/redis";
 import { filterUserData } from "~/server/helpers/filterUser";
-import type { Post, Comment } from "@prisma/client";
+import type { Like, Comment } from "@prisma/client";
+
+interface Post {
+    id: string
+    createdAt: Date
+    authorId: string
+    content: string
+    comments: Comment[]
+    likes: Like[]
+}
 
 const addUserDataToPosts = async (posts: Post[],) => {
     const users = (await clerkClient.users.getUserList({
         userId: posts.map((post) => post.authorId),
         limit: 100,
     })).map(filterUserData)
+
+    console.log(posts)
 
     return posts.map((post) => {
         const author = users.find((user) => user.id === post.authorId)
@@ -58,7 +69,10 @@ export const postsRouter = createTRPCRouter({
         const posts = await ctx.prisma.post.findMany({
             take: 100,
             orderBy: [{ createdAt: 'desc' }],
-            include: { comments: true, likes: true },
+            include: {
+                comments: true,
+                likes: true
+            },
         });
         return addUserDataToPosts(posts)
     }),

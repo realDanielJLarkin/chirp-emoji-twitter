@@ -8,7 +8,7 @@ import CommentsFeed from "./CommentsFeed"
 import CreateCommentWizard from "./CreateCommentWizard"
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import type { Like } from "@prisma/client"
+import type { Like, Post } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
@@ -16,13 +16,8 @@ dayjs.extend(relativeTime)
 
 
 type PostWithUser = RouterOutputs["posts"]["getAll"][number]
-type PostWithLikesAndComments = PostWithUser & {
-    post: PostWithUser["post"] & {
-        likes: Like[],
-        comments: Comment[]
-    };
-};
-const SinglePost = (props: PostWithLikesAndComments) => {
+const SinglePost = (props: PostWithUser) => {
+
 
     const checkForLikes = () => {
         if (post.likes) {
