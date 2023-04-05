@@ -1,11 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import { api, } from "~/utils/api"
-import { RouterOutputs } from "~/utils/api"
+import { api } from "~/utils/api"
+import type { RouterOutputs } from "~/utils/api"
 import dayjs from "dayjs"
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import type { Like, Comment } from "@prisma/client"
+import type { Like } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
@@ -20,18 +20,18 @@ type PostWithUser = RouterOutputs["posts"]["getAll"][number]
 
 const PostView = (props: PostWithUser) => {
 
-    const checkForLikes = () => {
-        if (post.likes) {
-            return post.likes
-        } else {
-            const noLikes: any = []
-            return noLikes
-        }
-    }
+    // const checkForLikes = () => {
+    //     if (post.likes) {
+    //         return post.likes
+    //     } else {
+    //         const noLikes: any = []
+    //         return noLikes
+    //     }
+    // }
 
     const { post, author } = props
     const user = useUser()
-    const likes = checkForLikes()
+    const likes = post.likes
     const ctx = api.useContext()
     const [likedPost, setLikedPost] = useState(likes)
     const [likeId, setLikeId] = useState(likes.map((like: Like) => like.id))
@@ -72,17 +72,22 @@ const PostView = (props: PostWithUser) => {
         } else {
             if (!isLoading) {
                 if (postLiked) {
-                    console.log(likeId)
-                    mutate({ postId, likeId })
+                    const like = likes.filter((like) => like.userId === user.user.id)
+                    const id = like[0]!.id
+                    console.log(id)
+                    mutate({ postId, likeId: id })
                     setLikeId([''])
                     setNumberOfLikes(likes.length - 1)
                     setPostLiked(false)
-                    setLikedPost({
-                        userId: '',
-                        postId: ''
-                    })
+
+
+                    // setLikedPost({
+                    //     userId: '',
+                    //     postId: '',
+
+                    // })
                 } else {
-                    setLikedPost({ userId: user.user.id, postId: post.id })
+                    // setLikedPost({ userId: user.user.id, postId: post.id })
                     setNumberOfLikes(likes.length + 1)
                     setPostLiked(true)
                     mutate({ postId, likeId: '', })

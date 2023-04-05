@@ -1,14 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 import { api } from "~/utils/api"
-import { RouterOutputs } from "~/utils/api"
+import type { RouterOutputs } from "~/utils/api"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import CommentsFeed from "./CommentsFeed"
 import CreateCommentWizard from "./CreateCommentWizard"
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import type { Like, Post } from "@prisma/client"
+import type { Like } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 
@@ -18,19 +18,9 @@ dayjs.extend(relativeTime)
 type PostWithUser = RouterOutputs["posts"]["getAll"][number]
 const SinglePost = (props: PostWithUser) => {
 
-
-    const checkForLikes = () => {
-        if (post.likes) {
-            return post.likes
-        } else {
-            const noLikes: any = []
-            return noLikes
-        }
-    }
-
     const { post, author } = props
     const user = useUser()
-    const likes = checkForLikes()
+    const likes = post.likes
     const ctx = api.useContext()
     const [likedPost, setLikedPost] = useState(likes)
     const [likeId, setLikeId] = useState(likes.map((like: Like) => like.id))
@@ -45,6 +35,8 @@ const SinglePost = (props: PostWithUser) => {
             return false
         }
     }
+
+
 
     useEffect(() => {
         if (user.isSignedIn) {
@@ -72,14 +64,21 @@ const SinglePost = (props: PostWithUser) => {
         } else {
             if (!isLoading) {
                 if (postLiked) {
-                    console.log(likeId)
-                    mutate({ postId, likeId })
+                    // console.log(likeId)
+                    // mutate({ postId, likeId })
+                    // setLikeId([''])
+                    // setNumberOfLikes(likes.length - 1)
+                    // setPostLiked(false)
+                    const like = likes.filter((like) => like.userId === user.user.id)
+                    const id = like[0]!.id
+                    console.log(id)
+                    mutate({ postId, likeId: id })
                     setLikeId([''])
                     setNumberOfLikes(likes.length - 1)
                     setPostLiked(false)
 
                 } else {
-                    setLikedPost({ userId: user.user.id, postId: post.id })
+                    // setLikedPost({ userId: user.user.id, postId: post.id })
                     setNumberOfLikes(likes.length + 1)
                     setPostLiked(true)
                     mutate({ postId, likeId: '', })

@@ -13,7 +13,7 @@ export const likesRouter = createTRPCRouter({
     performLikeAction: privateProcedure.input(z.object({ postId: z.string(), likeId: z.string(), })).mutation(async ({ ctx, input }) => {
         const userId = ctx.userId
         const postId = input.postId
-        const likeId = input.likeId[0]
+        const likeId = input.likeId
 
         if (!userId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Error adding like: User Error" })
         if (!postId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Error adding like: PostID Error" })
