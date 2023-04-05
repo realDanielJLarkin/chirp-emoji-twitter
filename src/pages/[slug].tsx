@@ -19,6 +19,8 @@ dayjs.extend(relativeTime)
 const ProfileFeed = ({ slug }: { slug: string }) => {
     const { data, isLoading } = api.posts.getPostsByUserId.useQuery({ userId: slug })
 
+    console.log(data)
+
     if (isLoading) return <LoadingPage />
     if (!data || data.length === 0) return <div>User has not posted</div>
 
@@ -52,7 +54,7 @@ const Profile: NextPage<{ slug: string }> = ({ slug }) => {
                 </div>
                 <div className="h-[64px]" />
                 <div className="p-4 text-2xl font-bold">
-                    {data.username ?? ""}
+                    {data.username ? data.username : `${data.firstName} ${data.lastName}`}
                 </div>
                 <div className="border-b border-slate-200 w-full" />
                 <ProfileFeed slug={slug} />

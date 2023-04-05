@@ -54,8 +54,7 @@ const PostView = (props: any) => {
             void ctx.posts.getAll.invalidate()
         },
         onError: (error) => {
-            // const errorMessage = error.data?.zodError?.fieldErrors.content;
-            const errorMessage = " placeholder error"
+            const errorMessage = error.data?.zodError?.fieldErrors.content;
             console.log('Error adding like', errorMessage)
 
         }

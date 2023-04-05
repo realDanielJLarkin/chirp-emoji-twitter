@@ -13,9 +13,8 @@ const CreateCommentWizard = ({ placeholder, postId }: { placeholder: string, pos
             setInput('')
             void ctx.posts.getAll.invalidate()
         },
-        onError: () => {
-            // const errorMessage = error.data?.zodError?.fieldErrors.content;
-            const errorMessage = "failed to post"
+        onError: (error) => {
+            const errorMessage = error.data?.zodError?.fieldErrors.content;
             if (errorMessage && errorMessage[0]) {
                 toast.error(errorMessage[0])
             } else {

@@ -60,8 +60,7 @@ const SinglePost = (props: any) => {
             void ctx.posts.getAll.invalidate()
         },
         onError: (error) => {
-            // const errorMessage = error.data?.zodError?.fieldErrors.content;
-            const errorMessage = "place holder"
+            const errorMessage = error.data?.zodError?.fieldErrors.content;
             console.log('Error adding like', errorMessage)
 
         }
