@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Spinner } from "./Spinner";
+import type { KeyboardEvent } from "react";
 
 const CreateCommentWizard = ({ placeholder, postId }: { placeholder: string, postId: string }) => {
 
@@ -27,7 +28,7 @@ const CreateCommentWizard = ({ placeholder, postId }: { placeholder: string, pos
     const { user } = useUser()
     const [input, setInput] = useState('')
 
-    const handleEnterKeyPress = (event: any) => {
+    const handleEnterKeyPress = (event: KeyboardEvent) => {
         if (event.key === 'Enter') {
             event.preventDefault()
             if (input !== '') {
