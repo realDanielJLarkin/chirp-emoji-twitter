@@ -1,15 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { SignInButton, useUser, SignOutButton } from "@clerk/nextjs";
-import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime"
-import { LoadingPage } from "~/components/Spinner";
 import { PageLayout } from "~/components/Layout";
-import PostView from "../components/PostView"
 import CreatePostWizard from "~/components/CreatePostWizard";
 import Feed from "~/components/HomeFeed";
-import { useState } from "react";
+
 
 dayjs.extend(relativeTime)
 

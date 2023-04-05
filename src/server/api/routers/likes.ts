@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { clerkClient } from "@clerk/nextjs/server";
+// import { clerkClient } from "@clerk/nextjs/server";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
-import { Redis } from "@upstash/redis";
-import { filterUserData } from "~/server/helpers/filterUser";
-import type { Post, Comment } from "@prisma/client";
-import { executionAsyncResource } from "async_hooks";
+// import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
+// import { Redis } from "@upstash/redis";
+// import { filterUserData } from "~/server/helpers/filterUser";
+// import type { Post, Comment } from "@prisma/client";
+// import { executionAsyncResource } from "async_hooks";
 
 
 export const likesRouter = createTRPCRouter({

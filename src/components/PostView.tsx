@@ -1,10 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import { api, RouterOutputs } from "~/utils/api"
+import { api, } from "~/utils/api"
+// import {RouterOutputs} from "~/utils/api"
 import dayjs from "dayjs"
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import type { Like, Post, } from "@prisma/client"
+import type { Like } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
 

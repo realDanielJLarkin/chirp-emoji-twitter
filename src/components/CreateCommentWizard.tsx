@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Spinner } from "./Spinner";
-import { StringArraySupportOption } from "prettier";
 
 const CreateCommentWizard = ({ placeholder, postId }: { placeholder: string, postId: string }) => {
 

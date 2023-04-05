@@ -1,11 +1,11 @@
 import { PageLayout } from "~/components/Layout"
 import { api } from "~/utils/api"
-import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
+import type { NextPage, GetStaticProps } from "next"
 import { generateSSGHelper } from "~/server/helpers/ssgHelper"
-import PostView from "~/components/PostView"
+// import PostView from "~/components/PostView"
 import Link from "next/link"
-import { Fragment } from 'react'
-import { ChatBubbleLeftEllipsisIcon, TagIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+// import { Fragment } from 'react'
+// import { ChatBubbleLeftEllipsisIcon, TagIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import SinglePost from "~/components/SinglePost"
 
 

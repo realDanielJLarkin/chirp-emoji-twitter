@@ -1,5 +1,3 @@
-"use client"
-import { createContext, useState } from "react"
 import { api } from "~/utils/api";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { AppProps } from "next/app";

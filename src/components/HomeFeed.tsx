@@ -1,7 +1,6 @@
 import PostView from "./PostView"
 import { api } from "~/utils/api"
 import { LoadingPage } from "./Spinner"
-import { useState } from "react"
 
 
 const Feed = () => {

@@ -1,14 +1,12 @@
-import { GetStaticProps, InferGetServerSidePropsType, type NextPage } from "next";
+import { GetStaticProps, type NextPage } from "next";
 import Head from "next/head";
-import { SignInButton } from "@clerk/nextjs";
-import { api, RouterOutputs } from "~/utils/api";
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import { appRouter } from "~/server/api/root";
-import { prisma } from "~/server/db";
-import superjson from "superjson"
+import { api } from "~/utils/api";
+// import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+// import { appRouter } from "~/server/api/root";
+// import { prisma } from "~/server/db";
+// import superjson from "superjson"
 import { PageLayout } from "~/components/Layout";
 import Image from "next/image";
-import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime"
 import { LoadingPage } from "~/components/Spinner";
